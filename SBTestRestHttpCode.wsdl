@@ -1,0 +1,60 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="SBTestRestHttpCode"
+     targetNamespace="http://xmlns.oracle.com/ServiceBusApplication/SBTestRestHttpCode/SBTestRestHttpCode"
+     xmlns:tns="http://xmlns.oracle.com/ServiceBusApplication/SBTestRestHttpCode/SBTestRestHttpCode"
+     xmlns:inp1="http://www.test.com/OSB/REST/stdIO"
+     xmlns:inp2="http://www.test.com/OSB/REST/HTTPcode"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="SBTestRestHttpCode">
+        <plnk:role name="SBTestRestHttpCodeProvider" portType="tns:execute_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.test.com/OSB/REST/stdIO" schemaLocation="SBTestRestHttpCode.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.test.com/OSB/REST/HTTPcode" schemaLocation="Error.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="request" element="inp1:request"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="response" element="inp1:response"/>
+    </wsdl:message>
+    <wsdl:message name="badZipCode">
+        <wsdl:part name="badZipCode" element="inp2:BadZipCode"/>
+    </wsdl:message>
+    <wsdl:message name="noZipCode">
+        <wsdl:part name="noZipCode" element="inp2:NoZipCode"/>
+    </wsdl:message>
+    <wsdl:message name="technicalFailure">
+        <wsdl:part name="technicalFailure" element="inp2:TechnicalFailure"/>
+    </wsdl:message>
+    <wsdl:portType name="execute_ptt">
+        <wsdl:operation name="execute">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+            <wsdl:fault name="noZipCode" message="tns:noZipCode"/>
+            <wsdl:fault name="badZipCode" message="tns:badZipCode"/>
+            <wsdl:fault name="technicalFailure" message="tns:technicalFailure"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="execute_bind" type="tns:execute_ptt">
+        <soap12:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/"/>
+        <wsdl:operation name="execute">
+            <soap12:operation style="document" soapAction="execute" soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/ServiceBusApplication/SBTestRestHttpCode/SBTestRestHttpCode"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/ServiceBusApplication/SBTestRestHttpCode/SBTestRestHttpCode"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

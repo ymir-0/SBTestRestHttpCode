@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.test.com/OSB/REST/stdIO"
+            targetNamespace="http://www.test.com/OSB/REST/stdIO"
+            elementFormDefault="qualified">
+
+  <xsd:element name="request">
+    <xsd:complexType>
+      <xsd:sequence>
+          <xsd:element name="zipCode" type="xsd:positiveInteger"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="response">
+    <xsd:complexType>
+      <xsd:sequence>
+          <xsd:element name="city" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>
